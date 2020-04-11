@@ -1,0 +1,14 @@
+﻿@model string
+@{
+	ViewData["Title"] = "Area";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model</h2>
+<text>Links:</text>
+<p>
+	@Html.ActionLink("Random number", "Random", "My", new { @class = "nav-link text-dark" })
+</p>
+<p>
+	<a asp-area="" asp-controller="My" asp-action="Index" class="nav-link text-dark">MyWebApplication</a>
+</p>

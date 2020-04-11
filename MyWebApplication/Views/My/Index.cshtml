@@ -1,0 +1,13 @@
+﻿@{
+	ViewData["Title"] = "HomePage";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Welcome to this web application!</h2>
+<text>Links:</text>
+<p>
+	@Html.ActionLink("Random number", "Random", "My", new { @class = "nav-link text-dark" })
+</p>
+<p>
+	@Html.ActionLink("Area", "Area", "My", new { side = 3 }, new { @class = "nav-link text-dark" })
+</p>
