@@ -1,0 +1,42 @@
+﻿@model MyWebApplication.Domain.Models.TrackModel
+
+@{
+    ViewData["Title"] = "EditSong";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit song:</h2>
+
+<div class="row">
+    <div class="col-md-4">
+		<form asp-action="EditSong" asp-route-idBand=@ViewBag.Band.Id asp-route-idAlbum=@ViewBag.Album.Id asp-route-idTrack=@ViewBag.Track.Id>
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group">
+				<label asp-for="Name" class="control-label"></label>
+				<input asp-for="Name" class="form-control" value=@ViewBag.Track.Name />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Length" class="control-label"></label>
+				<input asp-for="Length" class="form-control" value=@ViewBag.Track.Length />
+				<span asp-validation-for="Length" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ReleaseDate" class="control-label"></label>
+				<input asp-for="ReleaseDate" class="form-control" value=@ViewBag.Track.ReleaseDate />
+				<span asp-validation-for="ReleaseDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-default" />
+			</div>
+		</form>
+    </div>
+</div>
+<p>
+	<text>
+		_________________________<br />
+		@Html.ActionLink("Back to list of songs", "SongsFromAlbum", new { idAlbum = ViewBag.Album.Id, idBand = ViewBag.Band.Id })
+	</text>
+</p>
+
+

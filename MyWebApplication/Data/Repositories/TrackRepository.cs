@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MyWebApplication.Data.Entities;
+using System.Reflection;
 
 
 namespace MyWebApplication.Data.Repositories
@@ -38,7 +39,7 @@ namespace MyWebApplication.Data.Repositories
 			TrackEntity e = null;
 			foreach (TrackEntity entity in contextList)
 			{
-				if (Convert.ToInt16(entity.Id) == id)
+				if (entity.Id == id)
 				{
 					e = entity;
 					break;
@@ -47,8 +48,12 @@ namespace MyWebApplication.Data.Repositories
 			return e;
 		}
 
-		public void Update(TrackEntity entity)
+		public void Update(TrackEntity entityOld, TrackEntity entityNew)
 		{
+			entityOld.Name = entityNew.Name;
+			entityOld.Length = entityNew.Length;
+			entityOld.ReleaseDate = entityNew.ReleaseDate;
+
 			////contextDbSet.Update(entity);
 			//TEntity upde = null;
 
@@ -74,7 +79,7 @@ namespace MyWebApplication.Data.Repositories
 			//}
 			foreach (TrackEntity e in contextList)
 			{
-				if (Convert.ToInt16(e.Id) == id)
+				if (e.Id == id)
 				{
 					contextList.Remove(e);
 					break;

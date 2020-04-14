@@ -43,6 +43,31 @@ namespace MyWebApplication.Domain.Services
 			}
 			//UnitOfWork.Save();
 		}
+		
+		public void EditTrack(AlbumModel album, TrackModel track)
+		{
+			var oldTrack = UnitOfWork.TrackRepository.Get(track.Id);
+			var newTrack = mapper.Map<TrackEntity>(track);
+			UnitOfWork.TrackRepository.Update(oldTrack, newTrack);
+
+
+			foreach (AlbumEntity albumEntity in UnitOfWork.AlbumRepository.GetAll())
+			{
+				if (albumEntity.Id == album.Id)
+				{
+					foreach (TrackEntity oldTrackEntity in albumEntity.TrackEntities)
+					{
+						if (oldTrackEntity.Id == newTrack.Id)
+						{
+							oldTrackEntity.Name = newTrack.Name;
+							oldTrackEntity.Length = newTrack.Length;
+							oldTrackEntity.ReleaseDate = newTrack.ReleaseDate;
+							break;
+						}
+					}
+				}
+			}
+		}
 
 		public void DeleteTrackFromAlbumAndFromRepos(AlbumModel album, TrackModel track)
 		{
@@ -66,8 +91,6 @@ namespace MyWebApplication.Domain.Services
 			//UnitOfWork.Save();
 		}
 
-
-		//public void UpdateTrack()
 		public IEnumerable<TrackModel> GetTracksFromAlbum(AlbumModel album)
 		{
 			var tracksFromAlbum = new List<TrackEntity>();

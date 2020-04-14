@@ -11,7 +11,7 @@
 		<text>
 			<b>@track.Name</b>: length = @track.Length, release date = @track.ReleaseDate 
 			|
-			@Html.ActionLink("Edit", "EditSong")
+			@Html.ActionLink("Edit", "EditSong", new { idBand = ViewBag.Band.Id, idAlbum = ViewBag.Album.Id, idTrack = track.Id })
 			|
 			@Html.ActionLink("Delete", "DeleteSongFromAlbum", new { idBand = ViewBag.Band.Id, idAlbum = ViewBag.Album.Id, idTrack = track.Id })
 		</text>

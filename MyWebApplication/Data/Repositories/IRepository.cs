@@ -11,7 +11,7 @@ namespace MyWebApplication.Data.Repositories
 		IEnumerable<T> GetAll();
 		void Add(T item);
 		T Get(int id);
-		void Update(T item);
+		void Update(T item1, T item2);
 		void Delete(int id);
 		//void Save();
 	}

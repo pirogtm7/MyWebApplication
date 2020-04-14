@@ -12,5 +12,6 @@ namespace MyWebApplication.Domain.Interfaces
 		IEnumerable<TrackModel> GetTracksFromAlbum(AlbumModel album);
 		void AddTrackToAlbumAndToRepos(AlbumModel album, TrackModel track);
 		void DeleteTrackFromAlbumAndFromRepos(AlbumModel album, TrackModel track);
+		void EditTrack(AlbumModel album, TrackModel track);
 	}
 }

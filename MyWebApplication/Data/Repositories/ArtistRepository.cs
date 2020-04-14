@@ -47,7 +47,7 @@ namespace MyWebApplication.Data.Repositories
 			return e;
 		}
 
-		public void Update(ArtistEntity entity)
+		public void Update(ArtistEntity entity, ArtistEntity entity1)
 		{
 			////contextDbSet.Update(entity);
 			//TEntity upde = null;

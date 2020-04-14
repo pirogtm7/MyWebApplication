@@ -27,7 +27,6 @@ namespace MyWebApplication.Domain.Services
 			TrackService = trackService;
 		}
 
-		//public void AddAlbum()
 		public AlbumModel GetAlbum(int id)
 		{
 			var album = UnitOfWork.AlbumRepository.Get(id);
