@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MyWebApplication.Data.Entities;
 
 namespace MyWebApplication.Data.Repositories
 {
-	public interface IRepository<T> where T : class
+	public interface IRepository<T> where T : IBaseEntity
 	{
 		IEnumerable<T> GetAll();
 		void Add(T item);
 		T Get(int id);
 		void Update(T item);
 		void Delete(int id);
-		void Save();
+		//void Save();
 	}
 }

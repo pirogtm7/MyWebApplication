@@ -8,6 +8,9 @@ namespace MyWebApplication.Domain.Interfaces
 {
 	public interface IAlbumService
 	{
+		IEnumerable<AlbumModel> GetAlbumsFromBand(BandModel band);
 		int CountAlbumLength(AlbumModel album);
+		AlbumModel GetAlbum(int id);
+		AlbumModel GetAlbumFromBand(BandModel band, int idAlbum);
 	}
 }

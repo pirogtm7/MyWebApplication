@@ -1,0 +1,30 @@
+﻿
+@{
+	ViewData["Title"] = "SongsFromAlbum";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Songs from @ViewBag.Album.Name:</h2>
+@foreach (TrackModel track in ViewBag.Tracks)
+{
+	<p>
+		<text>
+			<b>@track.Name</b>: length = @track.Length, release date = @track.ReleaseDate 
+			|
+			@Html.ActionLink("Edit", "EditSong")
+			|
+			@Html.ActionLink("Delete", "DeleteSongFromAlbum", new { idBand = ViewBag.Band.Id, idAlbum = ViewBag.Album.Id, idTrack = track.Id })
+		</text>
+	</p>
+}
+
+<p>
+	@Html.ActionLink("Add song", "AddSongToAlbum", new { idBand = ViewBag.Band.Id, idAlbum = ViewBag.Album.Id })
+</p>
+
+<p>
+	<text>
+		_________________________<br />
+		@Html.ActionLink("Back to list of albums", "AlbumsFromBand", new { id = ViewBag.Band.Id })
+	</text>
+</p>

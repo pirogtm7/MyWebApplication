@@ -7,15 +7,19 @@ using MyWebApplication.Data.Entities;
 
 namespace MyWebApplication.Data
 {
-	public class MediaPlayerContext : DbContext
+	public class MediaPlayerContext
 	{
-		public DbSet<TrackEntity> TrackContextEntities { get; set; }
-		public DbSet<AlbumEntity> AlbumContextEntities { get; set; }
-		public DbSet<ArtistEntity> Artists { get; set; }
-		public DbSet<BandEntity> BandContextEntities { get; set; }
+		public List<TrackEntity> TrackContextEntities { get; set; }
+		public List<AlbumEntity> AlbumContextEntities { get; set; }
+		public List<ArtistEntity> ArtistContextEntities { get; set; }
+		public List<BandEntity> BandContextEntities { get; set; }
 
 		public MediaPlayerContext()//DbContextOptions<MediaPlayerContext> options) : base(options)
 		{
+			TrackContextEntities = new List<TrackEntity>();
+			AlbumContextEntities = new List<AlbumEntity>();
+			ArtistContextEntities = new List<ArtistEntity>();
+			BandContextEntities = new List<BandEntity>();
 			MediaPlayerInitializer.Initialize(this);
 		}
 

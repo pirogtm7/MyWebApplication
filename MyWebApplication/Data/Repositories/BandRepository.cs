@@ -2,42 +2,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using MyWebApplication.Data.Entities;
+
 
 namespace MyWebApplication.Data.Repositories
 {
-	public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
+	public class BandRepository : IRepository<BandEntity>
 	{
 		private readonly MediaPlayerContext context;
 		//private readonly DbSet<T> contextDbSet;
-		private readonly List<TEntity> contextList;
+		private readonly List<BandEntity> contextList;
 
 
-		public Repository(MediaPlayerContext context, List<TEntity> contextList)
+		public BandRepository(MediaPlayerContext context)
 		{
 			//contextDbSet = context.Set<T>();
-			this.context = context;
-			this.contextList = contextList;
+			contextList = context.BandContextEntities;
 		}
 
-		public IEnumerable<TEntity> GetAll()
+		public IEnumerable<BandEntity> GetAll()
 		{
 			//return contextDbSet.ToList();
 			return contextList;
 		}
 
-		public void Add(TEntity entity)
+		public void Add(BandEntity entity)
 		{
 			//contextDbSet.Add(entity);
 			contextList.Add(entity);
 		}
 
-		public TEntity Get(int id)
+		public BandEntity Get(int id)
 		{
 			//return contextDbSet.Find(id);
-			TEntity e = null;
-			foreach (TEntity entity in contextList)
+			BandEntity e = null;
+			foreach (BandEntity entity in contextList)
 			{
 				if (Convert.ToInt16(entity.Id) == id)
 				{
@@ -48,7 +47,7 @@ namespace MyWebApplication.Data.Repositories
 			return e;
 		}
 
-		public void Update(TEntity entity)
+		public void Update(BandEntity entity)
 		{
 			////contextDbSet.Update(entity);
 			//TEntity upde = null;
@@ -73,7 +72,7 @@ namespace MyWebApplication.Data.Repositories
 			//{
 			//	contextDbSet.Remove(tEntity);
 			//}
-			foreach (TEntity e in contextList)
+			foreach (BandEntity e in contextList)
 			{
 				if (Convert.ToInt16(e.Id) == id)
 				{

@@ -1,0 +1,24 @@
+﻿
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Welcome to MediaPlayer Web Page!</h2>
+<text>*only spanking music lovers are welcome</text>
+<h3>Bands:</h3>
+@foreach (BandModel band in Model)
+{
+	<p>
+		<text>
+			<b>@Html.ActionLink(band.Name, "AlbumsFromBand", new { id = band.Id })</b>
+		</text>
+	</p>
+}
+
+	@*@foreach (var item in Model)
+		{
+			<td>
+				@Html.ActionLink("Count Album Length", "CountAlbumLength", new { id=item.Id})
+			</td>
+		}*@

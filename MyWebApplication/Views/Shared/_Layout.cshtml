@@ -24,7 +24,7 @@
 
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li>
+					@*<li>
 						<a asp-area="" asp-controller="My" asp-action="Index" class="navbar-brand">Home page</a>
 					</li>
 					<li class="nav-item">
@@ -32,6 +32,9 @@
 					</li>
 					<li class="nav-item">
 						@Html.ActionLink("Area", "Area", "My", new { side = 3 }, new { @class = "nav-link text-dark" })
+					</li>*@
+					<li>
+						<a asp-area="" asp-controller="MediaPlayer" asp-action="Index" class="navbar-brand">Media Player</a>
 					</li>
 				</ul>
 			</div>

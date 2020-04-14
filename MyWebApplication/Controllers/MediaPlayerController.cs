@@ -15,91 +15,122 @@ namespace MyWebApplication.Controllers
 {
     public class MediaPlayerController : Controller
     {
-        private IRepository<AlbumEntity> AlbumRepos;
+        IBandService BandService;
         private IAlbumService AlbumService;
-        IMapper mapper;
+        ITrackService TrackService;
 
-        public MediaPlayerController(MediaPlayerContext context, IMapper mapper, IAlbumService alServ)
+
+        public MediaPlayerController(IBandService bandService, IAlbumService albumService,
+            ITrackService trackService)
         {
-            AlbumRepos = new Repository<AlbumEntity>(context);
-            this.mapper = mapper;
-            AlbumService = alServ;
+            BandService = bandService;
+            AlbumService = albumService;
+            TrackService = trackService;
         }
 
         public ActionResult Index()
         {
-            return View(AlbumRepos.GetAll());
+            return View(BandService.GetAllBands());
         }
 
-        public ActionResult Create()
+        [HttpGet]
+        public ActionResult AlbumsFromBand(int id)
         {
+            var band = BandService.GetBand(id);
+            ViewBag.Band = band;
+            ViewBag.Albums = AlbumService.GetAlbumsFromBand(band);
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult SongsFromAlbum(int idAlbum, int idBand)
+        {
+            var band = BandService.GetBand(idBand);
+            ViewBag.Band = band;
+            var album = AlbumService.GetAlbum(idAlbum);
+            ViewBag.Album = album;
+            ViewBag.Tracks = TrackService.GetTracksFromAlbum(album);
+            return View();
+        }
+
+        public ActionResult AddSongToAlbum(int idBand, int idAlbum)
+        {
+            ViewBag.Band = BandService.GetBand(idBand);
+            ViewBag.Album = AlbumService.GetAlbum(idAlbum);
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(AlbumEntity album)
+        public ActionResult AddSongToAlbum(int idBand, int idAlbum, TrackModel track)
         {
             try
             {
-                AlbumRepos.Add(album);
-                AlbumRepos.Save();
-                return RedirectToAction(nameof(Index));
+                ViewBag.Band = BandService.GetBand(idBand);
+                var album = AlbumService.GetAlbum(idAlbum);
+                ViewBag.Album = album;
+                TrackService.AddTrackToAlbumAndToRepos(album, track);
+                return RedirectToAction(nameof(SongsFromAlbum), new { idAlbum = idAlbum, idBand = ViewBag.Band.Id});
             }
             catch
             {
-                return View(album);
+                return View(track);
             }
         }
 
-        public ActionResult Edit(int id)
+        //public ActionResult Edit(int id)
+        //{
+        //    AlbumEntity album = AlbumRepos.Get(id);
+        //    return View(album);
+        //}
+
+        //[HttpPost]
+        //public ActionResult Edit(AlbumEntity album)
+        //{
+        //    try
+        //    {
+        //        AlbumRepos.Update(album);
+        //        //AlbumRepos.Save();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View(album);
+        //    }
+        //}
+
+        [HttpGet]
+        public ActionResult DeleteSongFromAlbum(int idBand, int idAlbum, int idTrack)
         {
-            AlbumEntity album = AlbumRepos.Get(id);
-            return View(album);
+            ViewBag.Band = BandService.GetBand(idBand);
+            ViewBag.Album = AlbumService.GetAlbum(idAlbum);
+            var track = TrackService.GetTrack(idTrack);
+            ViewBag.Track = track;
+
+            return View(track);
         }
 
-        [HttpPost]
-        public ActionResult Edit(AlbumEntity album)
+        [HttpPost, ActionName("DeleteSongFromAlbum")]
+        public ActionResult DeleteSongConfirmation(int idBand, int idAlbum, int idTrack)
         {
-            try
-            {
-                AlbumRepos.Update(album);
-                AlbumRepos.Save();
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View(album);
-            }
+
+            ViewBag.Band = BandService.GetBand(idBand);
+            var album = AlbumService.GetAlbum(idAlbum);
+            ViewBag.Album = album;
+            var track = TrackService.GetTrack(idTrack);
+            ViewBag.Track = track;
+            TrackService.DeleteTrackFromAlbumAndFromRepos(album, track);
+
+            return RedirectToAction(nameof(SongsFromAlbum), new { idAlbum = idAlbum, idBand = ViewBag.Band.Id });
         }
 
         [HttpGet]
-        public ActionResult Delete(int id)
+        public ActionResult CountAlbumLength(int idAlbum, int idBand)
         {
-            AlbumEntity album = AlbumRepos.Get(id);
-            return View(album);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmation(int id)
-        {
-            try
-            {
-                AlbumRepos.Delete(id);
-                AlbumRepos.Save();
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        [HttpGet]
-        public ActionResult CountAlbumLength(int id)
-        {
-            AlbumEntity album = AlbumRepos.Get(id);
-            AlbumModel albumModel = mapper.Map<AlbumModel>(album);
-            return View(AlbumService.CountAlbumLength(albumModel));
+            ViewBag.Band = BandService.GetBand(idBand);
+            var album = AlbumService.GetAlbum(idAlbum);
+            ViewBag.Album = album;
+            ViewBag.AlbumLength = AlbumService.CountAlbumLength(album);
+            return View();
         }
     }
 }

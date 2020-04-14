@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "CountAlbumLength";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Length of @ViewBag.Album.Name: @ViewBag.AlbumLength.</h2>
+
+<p>
+	<text>
+		_________________________<br />
+		@Html.ActionLink("Back to list of albums", "AlbumsFromBand", new { id = ViewBag.Band.Id })
+	</text>
+</p>

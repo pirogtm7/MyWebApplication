@@ -1,0 +1,24 @@
+﻿
+@{
+	ViewData["Title"] = "AlbumsFromBand";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Albums of @ViewBag.Band.Name:</h2>
+@foreach (AlbumModel album in ViewBag.Albums)
+{
+	<p>
+		<text>
+			<b>@Html.ActionLink(album.Name, "SongsFromAlbum", new { idAlbum = album.Id, idBand = ViewBag.Band.Id })</b>
+			|
+			@Html.ActionLink("Count album length", "CountAlbumLength", new { idAlbum = album.Id, idBand = ViewBag.Band.Id })
+		</text>
+	</p>
+}
+
+<p>
+	<text>
+		_________________________<br />
+		@Html.ActionLink("Back to list of bands", "Index")
+	</text>
+</p>
