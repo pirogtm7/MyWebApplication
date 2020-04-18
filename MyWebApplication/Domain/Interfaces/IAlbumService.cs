@@ -11,6 +11,5 @@ namespace MyWebApplication.Domain.Interfaces
 		IEnumerable<AlbumModel> GetAlbumsFromBand(BandModel band);
 		int CountAlbumLength(AlbumModel album);
 		AlbumModel GetAlbum(int id);
-		AlbumModel GetAlbumFromBand(BandModel band, int idAlbum);
 	}
 }

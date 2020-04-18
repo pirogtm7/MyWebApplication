@@ -30,7 +30,5 @@ namespace MyWebApplication.Controllers
             string model = $"The area of the square is {area}";
             return View("Area", model);
         }
-
-
     }
 }

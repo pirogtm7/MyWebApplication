@@ -24,8 +24,6 @@ namespace MyWebApplication
     {
         public Startup(IConfiguration configuration)
         {
-            var service = new ServiceCollection();
-            ConfigureServices(service);
             Configuration = configuration;
         }
 
@@ -34,18 +32,13 @@ namespace MyWebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<MediaPlayerContext>(opt => 
-            //    opt.UseSqlServer("Server=localhost;Database=MediaPlayerDB;Trusted_Connection=True;"));
-            services.AddSingleton(new MediaPlayerContext());
-            services.AddScoped<IRepository<AlbumEntity>, AlbumRepository>();
-            services.AddScoped<IRepository<ArtistEntity>, ArtistRepository>();
-            services.AddScoped<IRepository<BandEntity>, BandRepository>();
-            services.AddScoped<IRepository<TrackEntity>, TrackRepository>();
+            services.AddDbContext<MediaPlayerContext>(opt =>
+                opt.UseSqlServer(Configuration.GetConnectionString("MediaPlayerDatabase")));
+            services.AddScoped<IRepository<AlbumEntity>, Repository<AlbumEntity>>();
+            services.AddScoped<IRepository<ArtistEntity>, Repository<ArtistEntity>>();
+            services.AddScoped<IRepository<BandEntity>, Repository<BandEntity>>();
+            services.AddScoped<IRepository<TrackEntity>, Repository<TrackEntity>>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            //services.AddScoped<IRepository<AlbumEntity>, Repository<AlbumEntity>>();
-            //services.AddScoped<IRepository<ArtistEntity>, Repository<ArtistEntity>>();
-            //services.AddScoped<IRepository<BandEntity>, Repository<BandEntity>>();
-            //services.AddScoped<IRepository<TrackEntity>, Repository<TrackEntity>>();
             services.AddSingleton(new MapperConfiguration(c => c.AddProfile(new Domain.Mapper())).CreateMapper());
             services.AddTransient<IAlbumService, AlbumService>();
             services.AddTransient<IArtistService, ArtistService>();

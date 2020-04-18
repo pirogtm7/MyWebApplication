@@ -10,5 +10,7 @@ namespace MyWebApplication.Domain.Models
 		public string Name { get; set; }
 		public int Length { get; set; }
 		public DateTime ReleaseDate { get; set; }
+		public int AlbumEntityId { get; set; }
+		public AlbumModel AlbumEntity { get; set; }
 	}
 }

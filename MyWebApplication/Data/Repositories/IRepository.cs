@@ -6,13 +6,12 @@ using MyWebApplication.Data.Entities;
 
 namespace MyWebApplication.Data.Repositories
 {
-	public interface IRepository<T> where T : IBaseEntity
+	public interface IRepository<TEntity> where TEntity : IBaseEntity
 	{
-		IEnumerable<T> GetAll();
-		void Add(T item);
-		T Get(int id);
-		void Update(T item1, T item2);
+		IEnumerable<TEntity> GetAll();
+		void Add(TEntity entity);
+		TEntity Get(int id);
+		void Update(TEntity entity);
 		void Delete(int id);
-		//void Save();
 	}
 }

@@ -12,15 +12,17 @@ namespace MyWebApplication.Domain
 	{
         public Mapper()
         {
-            CreateMap<AlbumEntity, AlbumModel>()
-                .ForMember(d => d.TrackModels, opt => opt.MapFrom(src => src.TrackEntities))
+            CreateMap<AlbumModel, AlbumEntity>()
+                .ForMember(d => d.TrackEntities, opt => opt.MapFrom(src => src.TrackModels))
                 .ReverseMap();
-            CreateMap<ArtistEntity, ArtistModel>().ReverseMap();
-            CreateMap<BandEntity, BandModel>()
-                .ForMember(d => d.AlbumModels, opt => opt.MapFrom(src => src.AlbumEntities))
-                .ForMember(d => d.ArtistModels, opt => opt.MapFrom(src => src.ArtistEntities))
+            CreateMap<ArtistModel, ArtistEntity>()
                 .ReverseMap();
-            CreateMap<TrackEntity, TrackModel>().ReverseMap();
+            CreateMap<BandModel, BandEntity>()
+                .ForMember(d => d.AlbumEntities, opt => opt.MapFrom(src => src.AlbumModels))
+                .ForMember(d => d.ArtistEntities, opt => opt.MapFrom(src => src.ArtistModels))
+                .ReverseMap();
+            CreateMap<TrackModel, TrackEntity>()
+                .ReverseMap();
         }
     }
 }

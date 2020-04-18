@@ -9,6 +9,13 @@ namespace MyWebApplication.Data.Entities
 	{
 		public string Name { get; set; }
 		public List<TrackEntity> TrackEntities { get; set; }
+		public int BandEntityId { get; set; }
+		public BandEntity BandEntity { get; set; }
+
+		public AlbumEntity()
+		{
+			TrackEntities = new List<TrackEntity>();
+		}
 
 	}
 }

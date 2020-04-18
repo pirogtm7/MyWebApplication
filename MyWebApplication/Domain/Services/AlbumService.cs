@@ -34,40 +34,27 @@ namespace MyWebApplication.Domain.Services
 			return albumModel;
 		}
 
-		public AlbumModel GetAlbumFromBand(BandModel band, int idAlbum)
-		{
-			AlbumModel albumFromBand = new AlbumModel();
-			foreach (AlbumModel a in band.AlbumModels)
-			{
-				if (a.Id == idAlbum)
-				{
-					albumFromBand = a;
-					break;
-				}
-			}
-			return albumFromBand;
-		}
-		
-
 		public IEnumerable<AlbumModel> GetAlbumsFromBand(BandModel band)
 		{
-			List<AlbumModel> albumsFromBand = new List<AlbumModel>();
-			foreach (AlbumModel album in band.AlbumModels)
+			var albumsFromBand = new List<AlbumEntity>();
+			foreach (AlbumEntity album in UnitOfWork.AlbumRepository.GetAll())
 			{
-				albumsFromBand.Add(album);
+				if (album.BandEntityId == band.Id)
+				{
+					albumsFromBand.Add(album);
+				}
 			}
-			return albumsFromBand;
+			var albumModels = mapper.Map<IEnumerable<AlbumModel>>(albumsFromBand);
+			return albumModels;
 		}
 
 		public int CountAlbumLength(AlbumModel album)
 		{
 			int AlbumLength = 0;
-
 			foreach (TrackModel track in TrackService.GetTracksFromAlbum(album))
 			{
 				AlbumLength += track.Length;
 			}
-
 			return AlbumLength;
 		}
 	}

@@ -26,9 +26,28 @@ namespace MyWebApplication.Data.UnitOfWork
 			TrackRepository = tracks;
 		}
 
-		//public void Save()
+		public void Save()
+		{
+			context.SaveChanges();
+		}
+
+		//private bool disposed = false;
+
+		//protected virtual void Dispose(bool disposing)
 		//{
-		//	context.SaveChanges();
+		//	if (!disposed)
+		//	{
+		//		if (disposing)
+		//		{
+		//			context.Dispose();
+		//		}
+		//	}
+		//}
+
+		//public void Dispose()
+		//{
+		//	Dispose(true);
+		//	GC.SuppressFinalize(this);
 		//}
 	}
 }

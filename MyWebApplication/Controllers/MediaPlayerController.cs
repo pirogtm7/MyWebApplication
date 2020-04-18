@@ -16,9 +16,8 @@ namespace MyWebApplication.Controllers
     public class MediaPlayerController : Controller
     {
         IBandService BandService;
-        private IAlbumService AlbumService;
+        IAlbumService AlbumService;
         ITrackService TrackService;
-
 
         public MediaPlayerController(IBandService bandService, IAlbumService albumService,
             ITrackService trackService)
@@ -33,6 +32,7 @@ namespace MyWebApplication.Controllers
             return View(BandService.GetAllBands());
         }
 
+        [HttpGet]
         public ActionResult AlbumsFromBand(int id)
         {
             var band = BandService.GetBand(id);
@@ -41,6 +41,7 @@ namespace MyWebApplication.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult SongsFromAlbum(int idAlbum, int idBand)
         {
             var band = BandService.GetBand(idBand);
@@ -51,6 +52,7 @@ namespace MyWebApplication.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult AddSongToAlbum(int idBand, int idAlbum)
         {
             ViewBag.Band = BandService.GetBand(idBand);
@@ -63,10 +65,12 @@ namespace MyWebApplication.Controllers
         {
             try
             {
+                track.AlbumEntityId = idAlbum;
                 ViewBag.Band = BandService.GetBand(idBand);
                 var album = AlbumService.GetAlbum(idAlbum);
+                track.AlbumEntity = album;
                 ViewBag.Album = album;
-                TrackService.AddTrackToAlbumAndToRepos(album, track);
+                TrackService.AddTrackToAlbum(track);
                 return RedirectToAction(nameof(SongsFromAlbum), new { idAlbum = idAlbum, idBand = ViewBag.Band.Id});
             }
             catch
@@ -75,6 +79,7 @@ namespace MyWebApplication.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult EditSong(int idBand, int idAlbum, int idTrack)
         {
             ViewBag.Band = BandService.GetBand(idBand);
@@ -89,10 +94,12 @@ namespace MyWebApplication.Controllers
             try
             {
                 track.Id = idTrack;
+                track.AlbumEntityId = idAlbum;
                 ViewBag.Band = BandService.GetBand(idBand);
                 var album = AlbumService.GetAlbum(idAlbum);
+                track.AlbumEntity = album;
                 ViewBag.Album = album;
-                TrackService.EditTrack(album, track);
+                TrackService.EditTrack(track);
                 return RedirectToAction(nameof(SongsFromAlbum), new { idAlbum = idAlbum, idBand = ViewBag.Band.Id });
             }
             catch
@@ -101,6 +108,7 @@ namespace MyWebApplication.Controllers
             }
         }
 
+        [HttpGet]
         public ActionResult DeleteSongFromAlbum(int idBand, int idAlbum, int idTrack)
         {
             ViewBag.Band = BandService.GetBand(idBand);
@@ -120,11 +128,12 @@ namespace MyWebApplication.Controllers
             ViewBag.Album = album;
             var track = TrackService.GetTrack(idTrack);
             ViewBag.Track = track;
-            TrackService.DeleteTrackFromAlbumAndFromRepos(album, track);
+            TrackService.DeleteTrackFromAlbum(track);
 
             return RedirectToAction(nameof(SongsFromAlbum), new { idAlbum = idAlbum, idBand = ViewBag.Band.Id });
         }
 
+        [HttpGet]
         public ActionResult CountAlbumLength(int idAlbum, int idBand)
         {
             ViewBag.Band = BandService.GetBand(idBand);

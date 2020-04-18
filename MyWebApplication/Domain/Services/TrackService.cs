@@ -28,80 +28,62 @@ namespace MyWebApplication.Domain.Services
 			return trackModel;
 		}
 
-		public void AddTrackToAlbumAndToRepos(AlbumModel album, TrackModel track)
+		public void AddTrackToAlbum(TrackModel track)
 		{
-			var newTrack = mapper.Map<TrackEntity>(track);
-			UnitOfWork.TrackRepository.Add(newTrack);
-
-			foreach (AlbumEntity albumEntity in UnitOfWork.AlbumRepository.GetAll())
+			var newtrack = mapper.Map<TrackEntity>(track);
+			UnitOfWork.TrackRepository.Add(newtrack);
+			UnitOfWork.Save();
+		}
+		
+		public void EditTrack(TrackModel track)
+		{
+			foreach(TrackEntity oldtrack in UnitOfWork.TrackRepository.GetAll())
 			{
-				if (albumEntity.Id == album.Id)
+				if (oldtrack.Id == track.Id)
 				{
-					albumEntity.TrackEntities.Add(newTrack);
+					oldtrack.Name = track.Name;
+					oldtrack.Length = track.Length;
+					oldtrack.ReleaseDate = track.ReleaseDate;
+					UnitOfWork.TrackRepository.Update(oldtrack);
+					UnitOfWork.Save();
 					break;
 				}
 			}
-			//UnitOfWork.Save();
-		}
-		
-		public void EditTrack(AlbumModel album, TrackModel track)
-		{
-			var oldTrack = UnitOfWork.TrackRepository.Get(track.Id);
-			var newTrack = mapper.Map<TrackEntity>(track);
-			UnitOfWork.TrackRepository.Update(oldTrack, newTrack);
-
-
-			foreach (AlbumEntity albumEntity in UnitOfWork.AlbumRepository.GetAll())
-			{
-				if (albumEntity.Id == album.Id)
-				{
-					foreach (TrackEntity oldTrackEntity in albumEntity.TrackEntities)
-					{
-						if (oldTrackEntity.Id == newTrack.Id)
-						{
-							oldTrackEntity.Name = newTrack.Name;
-							oldTrackEntity.Length = newTrack.Length;
-							oldTrackEntity.ReleaseDate = newTrack.ReleaseDate;
-							break;
-						}
-					}
-				}
-			}
 		}
 
-		public void DeleteTrackFromAlbumAndFromRepos(AlbumModel album, TrackModel track)
+		public void DeleteTrackFromAlbum(TrackModel track)
 		{
 			UnitOfWork.TrackRepository.Delete(track.Id);
-			var deleteTrack = mapper.Map<TrackEntity>(track);
+			UnitOfWork.Save();
 
-			foreach (AlbumEntity albumEntity in UnitOfWork.AlbumRepository.GetAll())
-			{
-				if (albumEntity.Id == album.Id)
-				{
-					foreach (TrackEntity trackEntity in albumEntity.TrackEntities)
-					{
-						if (trackEntity.Id == deleteTrack.Id)
-						{
-							albumEntity.TrackEntities.Remove(trackEntity);
-							break;
-						}
-					}
-				}
-			}
-			//UnitOfWork.Save();
+			//foreach (AlbumEntity albumEntity in UnitOfWork.AlbumRepository.GetAll())
+			//{
+			//	if (albumEntity.Id == album.Id)
+			//	{
+			//		foreach (TrackEntity trackEntity in albumEntity.TrackEntities)
+			//		{
+			//			if (trackEntity.Id == deleteTrack.Id)
+			//			{
+			//				albumEntity.TrackEntities.Remove(trackEntity);
+			//				break;
+			//			}
+			//		}
+			//	}
+			//}
 		}
 
 		public IEnumerable<TrackModel> GetTracksFromAlbum(AlbumModel album)
 		{
 			var tracksFromAlbum = new List<TrackEntity>();
-
-			foreach (TrackEntity track in UnitOfWork.AlbumRepository.Get(album.Id).TrackEntities)
+			foreach (TrackEntity track in UnitOfWork.TrackRepository.GetAll())
 			{
-				tracksFromAlbum.Add(track);
+				if (track.AlbumEntityId == album.Id)
+				{
+					tracksFromAlbum.Add(track);
+				}
 			}
-
-			var tracksFromAlbumModels = mapper.Map<IEnumerable<TrackModel>>(tracksFromAlbum);
-			return tracksFromAlbumModels;
+			var trackModels = mapper.Map<IEnumerable<TrackModel>>(tracksFromAlbum);
+			return trackModels;
 		}
 
 		public IEnumerable<TrackModel> GetAllTracks()

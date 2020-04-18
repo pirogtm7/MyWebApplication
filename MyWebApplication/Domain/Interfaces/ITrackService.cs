@@ -10,8 +10,8 @@ namespace MyWebApplication.Domain.Interfaces
 	{
 		TrackModel GetTrack(int id);
 		IEnumerable<TrackModel> GetTracksFromAlbum(AlbumModel album);
-		void AddTrackToAlbumAndToRepos(AlbumModel album, TrackModel track);
-		void DeleteTrackFromAlbumAndFromRepos(AlbumModel album, TrackModel track);
-		void EditTrack(AlbumModel album, TrackModel track);
+		void AddTrackToAlbum(TrackModel track);
+		void DeleteTrackFromAlbum(TrackModel track);
+		void EditTrack(TrackModel track);
 	}
 }
