@@ -10,6 +10,6 @@ namespace MyWebApplication.Domain.Models
 		public string Name { get; set; }
 		public List<TrackModel> TrackModels { get; set; }
 		public int BandEntityId { get; set; }
-		public BandModel BandEntity { get; set; }
+		//public BandModel BandEntity { get; set; }
 	}
 }

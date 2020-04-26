@@ -55,21 +55,6 @@ namespace MyWebApplication.Domain.Services
 		{
 			UnitOfWork.TrackRepository.Delete(track.Id);
 			UnitOfWork.Save();
-
-			//foreach (AlbumEntity albumEntity in UnitOfWork.AlbumRepository.GetAll())
-			//{
-			//	if (albumEntity.Id == album.Id)
-			//	{
-			//		foreach (TrackEntity trackEntity in albumEntity.TrackEntities)
-			//		{
-			//			if (trackEntity.Id == deleteTrack.Id)
-			//			{
-			//				albumEntity.TrackEntities.Remove(trackEntity);
-			//				break;
-			//			}
-			//		}
-			//	}
-			//}
 		}
 
 		public IEnumerable<TrackModel> GetTracksFromAlbum(AlbumModel album)

@@ -13,5 +13,6 @@ namespace MyWebApplication.Domain.Interfaces
 		void AddTrackToAlbum(TrackModel track);
 		void DeleteTrackFromAlbum(TrackModel track);
 		void EditTrack(TrackModel track);
+		IEnumerable<TrackModel> GetAllTracks();
 	}
 }
