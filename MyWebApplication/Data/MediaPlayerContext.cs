@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyWebApplication.Data.Entities;
 
 namespace MyWebApplication.Data
 {
-	public class MediaPlayerContext : DbContext
+	public class MediaPlayerContext : IdentityDbContext
 	{
 		public DbSet<TrackEntity> TrackContextEntities { get; set; }
 		public DbSet<AlbumEntity> AlbumContextEntities { get; set; }

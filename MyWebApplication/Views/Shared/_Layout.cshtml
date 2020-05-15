@@ -1,4 +1,5 @@
-﻿@using MyWebApplication.Domain.Models;
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager;
 
 <!DOCTYPE html>
 <html>
@@ -24,18 +25,33 @@
 
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					@*<li>
-						<a asp-area="" asp-controller="My" asp-action="Index" class="navbar-brand">Home page</a>
-					</li>
-					<li class="nav-item">
-						@Html.ActionLink("Random number", "Random", "My", new { @class = "nav-link text-dark" })
-					</li>
-					<li class="nav-item">
-						@Html.ActionLink("Area", "Area", "My", new { side = 3 }, new { @class = "nav-link text-dark" })
-					</li>*@
 					<li>
 						<a asp-area="" asp-controller="MediaPlayer" asp-action="Index" class="navbar-brand">Media Player</a>
 					</li>
+					<li>
+						<a asp-area="" asp-controller="Search" asp-action="AlbumSearch" class="navbar-brand">Search</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav pull-right">
+					@if (signInManager.IsSignedIn(User))
+					{
+						<li class="nav-item">
+							<form method="post" asp-controller="Account" asp-action="Logout">
+								<button type="submit" class="navbar-link btn btn-link" style="width:auto">
+									Logout @User.Identity.Name
+								</button>
+							</form>
+						</li>
+					}
+					else
+					{
+						<li class="nav-item">
+							<a asp-area="" asp-controller="Account" asp-action="Register" class="navbar-link">Register</a>
+						</li>
+						<li class="nav-item">
+							<a asp-area="" asp-controller="Account" asp-action="Login" class="navbar-link">Login</a>
+						</li>
+					}
 				</ul>
 			</div>
 		</div>

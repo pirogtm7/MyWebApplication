@@ -17,6 +17,7 @@ using MyWebApplication.Data;
 using MyWebApplication.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MyWebApplication.Data.UnitOfWork;
+using Microsoft.AspNetCore.Identity;
 
 namespace MyWebApplication
 {
@@ -45,6 +46,8 @@ namespace MyWebApplication
             services.AddTransient<IBandService, BandService>();
             services.AddTransient<ITrackService, TrackService>();
 
+            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = true)
+                    .AddEntityFrameworkStores<MediaPlayerContext>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -70,8 +73,11 @@ namespace MyWebApplication
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
+            app.UseAuthentication();
+
+            app.UseCookiePolicy();
+             
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
