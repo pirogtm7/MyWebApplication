@@ -6,23 +6,15 @@ using System.Threading.Tasks;
 
 namespace MyWebApplication.Domain.ViewModels
 {
-	public class NewUserViewModel
+	public class EditUserViewModel
 	{
+		public string Id { get; set; }
+		[Required]
+		public string UserName { get; set; }
 		[Required]
 		[EmailAddress]
 		public string Email { get; set; }
-
-		[Required]
-		[DataType(DataType.Password)]
-		public string Password { get; set; }
-
-		[DataType(DataType.Password)]
-		[Display(Name = "Confirm password")]
-		[Compare("Password",
-			ErrorMessage = "Passwords do not match")]
-		public string ConfirmPassword { get; set; }
 		public string City { get; set; }
 		public string Country { get; set; }
-
 	}
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyWebApplication.Domain.ViewModels
 {
-	public class NewUserViewModel
+	public class ResetPasswordViewModel
 	{
 		[Required]
 		[EmailAddress]
@@ -18,11 +18,9 @@ namespace MyWebApplication.Domain.ViewModels
 
 		[DataType(DataType.Password)]
 		[Display(Name = "Confirm password")]
-		[Compare("Password",
-			ErrorMessage = "Passwords do not match")]
+		[Compare("Password", ErrorMessage = "Passwords do not match")]
 		public string ConfirmPassword { get; set; }
-		public string City { get; set; }
-		public string Country { get; set; }
 
+		public string Token { get; set; }
 	}
 }

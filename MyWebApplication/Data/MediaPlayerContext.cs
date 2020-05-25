@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyWebApplication.Data.Entities;
+using MyWebApplication.Domain.Models;
 
 namespace MyWebApplication.Data
 {
-	public class MediaPlayerContext : IdentityDbContext
+	public class MediaPlayerContext : IdentityDbContext<AppUser>
 	{
 		public DbSet<TrackEntity> TrackContextEntities { get; set; }
 		public DbSet<AlbumEntity> AlbumContextEntities { get; set; }

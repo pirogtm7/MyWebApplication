@@ -97,7 +97,6 @@ namespace MyWebApplication.Controllers
                 track.AlbumEntityId = idAlbum;
                 ViewBag.Band = BandService.GetBand(idBand);
                 var album = AlbumService.GetAlbum(idAlbum);
-                //track.AlbumEntity = album;
                 ViewBag.Album = album;
                 TrackService.EditTrack(track);
                 return RedirectToAction(nameof(SongsFromAlbum), new { idAlbum = idAlbum, idBand = ViewBag.Band.Id });

@@ -18,6 +18,10 @@ using MyWebApplication.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MyWebApplication.Data.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace MyWebApplication
 {
@@ -45,9 +49,11 @@ namespace MyWebApplication
             services.AddTransient<IArtistService, ArtistService>();
             services.AddTransient<IBandService, BandService>();
             services.AddTransient<ITrackService, TrackService>();
+            services.AddTransient<IMailService, MailService>();
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = true)
-                    .AddEntityFrameworkStores<MediaPlayerContext>();
+            services.AddIdentity<AppUser, IdentityRole>(options => options.SignIn.RequireConfirmedEmail = true)
+                    .AddEntityFrameworkStores<MediaPlayerContext>()
+                    .AddDefaultTokenProviders();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

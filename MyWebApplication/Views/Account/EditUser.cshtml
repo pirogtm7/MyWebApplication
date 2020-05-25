@@ -1,15 +1,14 @@
-﻿@model MyWebApplication.Domain.ViewModels.NewUserViewModel
+﻿@model MyWebApplication.Domain.ViewModels.EditUserViewModel
 
 @{
-	ViewData["Title"] = "Registration";
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Registration</h2>
-<hr />
+<h2>Edit user</h2>
 <div class="row">
 	<div class="col-md-4">
-		<form method="post">
+		<form asp-action="EditUser" asp-route-idUser=@Model.Id>
 			<div asp-validation-summary="All" class="text-danger"></div>
 			<div class="form-group">
 				<label asp-for="Email" class="control-label"></label>
@@ -17,26 +16,27 @@
 				<span asp-validation-for="Email" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="Password" class="control-label"></label>
-				<input asp-for="Password" class="form-control" />
-				<span asp-validation-for="Password" class="text-danger"></span>
-			</div>
-			<div class="form-group">
-				<label asp-for="ConfirmPassword" class="control-label"></label>
-				<input asp-for="ConfirmPassword" class="form-control" />
-				<span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+				<label asp-for="UserName" class="control-label"></label>
+				<input asp-for="UserName" class="form-control" />
+				<span asp-validation-for="UserName" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="City" class="control-label"></label>
 				<input asp-for="City" class="form-control" />
+				<span asp-validation-for="City" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="Country" class="control-label"></label>
 				<input asp-for="Country" class="form-control" />
+				<span asp-validation-for="Country" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<input type="submit" value="Register" class="btn btn-default" />
+				<input type="submit" value="Save" class="btn btn-default" />
 			</div>
 		</form>
 	</div>
+</div>
+
+<div>
+	<h3><a asp-action="ChangePassword">Change password</a></h3>
 </div>
